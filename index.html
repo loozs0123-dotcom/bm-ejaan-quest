@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BM Ejaan Quest · Tahun 3</title>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;background:linear-gradient(135deg,#0d2145,#08172f 70%);color:#fff;min-height:100vh}
+.wrap{max-width:900px;margin:auto;padding:24px}.hero{text-align:center;padding:45px 12px}.pill{display:inline-block;background:#245d93;border:1px solid #7cc0ff;padding:8px 18px;border-radius:999px;font-weight:800}
+h1{font-size:56px;color:#b8f59a;margin:18px 0}.start,.next,.retry{border:0;border-radius:16px;padding:16px 26px;font-size:20px;font-weight:900;cursor:pointer}
+.start,.retry{background:#ffc852;color:#173055}.card{background:#16345e;border:1px solid #4d7196;border-radius:24px;padding:24px;margin-top:20px}.hidden{display:none!important}
+.emoji{text-align:center;font-size:90px}.hint,.prompt{text-align:center;font-size:20px;margin:12px 0}.options{display:grid;grid-template-columns:1fr 1fr;gap:14px}.option{background:#fff;color:#16304f;border:3px solid transparent;border-radius:16px;padding:18px;font-size:24px;font-weight:900}
+.correct{border-color:#63d69a;background:#eafff4}.wrong{border-color:#ff6b6b;background:#fff0f0}.feedback{margin-top:16px;padding:14px;background:#112c4d;border-radius:14px}.next{width:100%;margin-top:14px;background:#367fd1;color:#fff}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.progress{height:12px;background:#213b5b;border-radius:999px;overflow:hidden;flex:1}.bar{height:100%;width:0;background:linear-gradient(90deg,#6ee7b7,#facc15)}
+@media(max-width:650px){h1{font-size:42px}.options{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section id="home" class="hero">
+<div class="pill">TAHUN 3 · BAHASA MELAYU</div>
+<h1>拼写大冒险!</h1>
+<p>看图，选正确的国语拼写！<br>一共 26 道题，挑战满分成为 Ejaan Champion 🏆</p>
+<button class="start" onclick="startGame()">🚀 开始挑战</button>
+</section>
+
+<section id="game" class="hidden">
+<div class="top"><div class="progress"><div id="bar" class="bar"></div></div><b id="score">0 / 0</b></div>
+<div class="card">
+<div id="qnum"></div>
+<div id="emoji" class="emoji"></div>
+<div id="hint" class="hint"></div>
+<div class="prompt">哪一个是正确的国语拼写？</div>
+<div class="options"><button id="opt1" class="option"></button><button id="opt2" class="option"></button></div>
+<div id="feedback" class="feedback">请选择一个答案。</div>
+<button id="next" class="next hidden" onclick="nextQ()">下一题 →</button>
+</div>
+</section>
+
+<section id="result" class="hidden">
+<div class="card" style="text-align:center">
+<div style="font-size:70px">🏆</div>
+<h2>挑战完成!</h2>
+<div id="finalscore" style="font-size:56px;font-weight:900;color:#ffc852"></div>
+<p id="finalmsg"></p>
+<button class="retry" onclick="startGame()">重新挑战全部</button>
+<button class="next" id="retryMissed" onclick="startMissed()">只练错题</button>
+</div>
+</section>
+</div>
+
+<script>
+const ALL=[
+["aiskrim","ais- krim","🍦","冰淇淋"],["mi","mee","🍜","面"],["bas","bus","🚌","巴士"],["pelanggan","pelanggang","👥","顾客"],["beg","bag","🎒","书包"],["bekerja","berkerja","💼","工作"],["kahwin","khawin","💍","结婚"],["Inggeris","English","🇬🇧","英语 / 英国"],["joging","jogging","🏃","慢跑"],["kampung","kampong","🏡","乡村"],["galakan","galakkan","👏","鼓励（名词）"],["komputer","computer","🖥️","电脑"],["pertunjukan","pertunjukkan","🎭","表演 / 展示"],["menebang","menerbang","🪓","砍伐"],["motosikal","motorsikal","🏍️","摩托车"],["surat khabar","suratkhabar","📰","报纸"],["menggunakan","menggunakkan","✍️","使用"],["rujukan","rujukkan","📚","参考资料"],["nombor","number","🔢","号码"],["memasukkan","memasukan","📥","放入"],["ulang kaji","ulangkaji","📖","复习"],["demam","deman","🤒","发烧"],["bekerjasama","berkerjasama","🤝","合作"],["gelanggang","gelanggan","🏸","球场 / 场地"],["televisyen","television","📺","电视"],["pelancong","pelancung","🧳","游客"]
+].map(x=>({correct:x[0],wrong:x[1],emoji:x[2],hint:x[3]}));
+let qs=[],idx=0,correct=0,missed=[],locked=false;
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function show(id){["home","game","result"].forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden")}
+function startGame(){qs=shuffle(ALL);idx=0;correct=0;missed=[];show("game");render()}
+function startMissed(){if(!missed.length)return;qs=shuffle(missed.map(x=>x.q));idx=0;correct=0;missed=[];show("game");render()}
+function render(){locked=false;const q=qs[idx];qnum.textContent="第 "+(idx+1)+" / "+qs.length+" 题";emoji.textContent=q.emoji;hint.textContent="提示："+q.hint;const o=shuffle([q.correct,q.wrong]);[opt1,opt2].forEach((b,i)=>{b.textContent=o[i];b.className="option";b.onclick=()=>choose(b.textContent,b)});feedback.textContent="请选择一个答案。";next.classList.add("hidden");score.textContent=correct+" / "+idx;bar.style.width=(idx/qs.length*100)+"%"}
+function choose(ans,btn){if(locked)return;locked=true;const q=qs[idx],ok=ans===q.correct;[opt1,opt2].forEach(b=>{if(b.textContent===q.correct)b.classList.add("correct");else if(b===btn&&!ok)b.classList.add("wrong")});if(ok){correct++;feedback.innerHTML="✅ 答对了！正确拼写是 <b>"+q.correct+"</b>。"}else{missed.push({q});feedback.innerHTML="❌ 再记一次：<b>"+q.correct+"</b> 才是正确拼写。"}score.textContent=correct+" / "+(idx+1);next.classList.remove("hidden")}
+function nextQ(){idx++;if(idx>=qs.length)return finish();render()}
+function finish(){show("result");finalscore.textContent=correct+" / "+qs.length;const p=Math.round(correct/qs.length*100);finalmsg.textContent=p===100?"满分！你是 Ejaan Champion 🏆":p>=80?"很好！再练习错题就更稳了。":p>=60?"不错，继续复习常写错的词。":"先复习正确拼写，再挑战一次。";retryMissed.style.display=missed.length?"inline-block":"none"}
+</script>
+</body>
+</html>
