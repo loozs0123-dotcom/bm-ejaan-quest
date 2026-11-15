@@ -3,65 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BM Ejaan Quest · Tahun 3</title>
+<title>Kelvin Week 2 Kosa Kata Quiz</title>
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;background:linear-gradient(135deg,#0d2145,#08172f 70%);color:#fff;min-height:100vh}
-.wrap{max-width:900px;margin:auto;padding:24px}.hero{text-align:center;padding:45px 12px}.pill{display:inline-block;background:#245d93;border:1px solid #7cc0ff;padding:8px 18px;border-radius:999px;font-weight:800}
-h1{font-size:56px;color:#b8f59a;margin:18px 0}.start,.next,.retry{border:0;border-radius:16px;padding:16px 26px;font-size:20px;font-weight:900;cursor:pointer}
-.start,.retry{background:#ffc852;color:#173055}.card{background:#16345e;border:1px solid #4d7196;border-radius:24px;padding:24px;margin-top:20px}.hidden{display:none!important}
-.emoji{text-align:center;font-size:90px}.hint,.prompt{text-align:center;font-size:20px;margin:12px 0}.options{display:grid;grid-template-columns:1fr 1fr;gap:14px}.option{background:#fff;color:#16304f;border:3px solid transparent;border-radius:16px;padding:18px;font-size:24px;font-weight:900}
-.correct{border-color:#63d69a;background:#eafff4}.wrong{border-color:#ff6b6b;background:#fff0f0}.feedback{margin-top:16px;padding:14px;background:#112c4d;border-radius:14px}.next{width:100%;margin-top:14px;background:#367fd1;color:#fff}
-.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.progress{height:12px;background:#213b5b;border-radius:999px;overflow:hidden;flex:1}.bar{height:100%;width:0;background:linear-gradient(90deg,#6ee7b7,#facc15)}
-@media(max-width:650px){h1{font-size:42px}.options{grid-template-columns:1fr}}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;background:linear-gradient(135deg,#0c1b31,#143a67);color:#fff;min-height:100vh}
+.wrap{max-width:900px;margin:auto;padding:24px}.hero{text-align:center;padding:48px 10px}.badge{display:inline-block;padding:8px 18px;border-radius:999px;background:#28598d;border:1px solid #7cb5ef;font-weight:800}
+h1{font-size:clamp(40px,7vw,64px);color:#b9f58e;margin:18px 0 8px}.sub{font-size:19px;line-height:1.6;color:#e2ebf6}.start{margin-top:20px;background:#ffc857;border:0;border-radius:18px;padding:16px 30px;font-size:23px;font-weight:900;color:#173153;box-shadow:0 7px 0 #9d681e}
+.hidden{display:none!important}.top{display:flex;gap:12px;align-items:center;margin-bottom:14px}.progress{height:13px;background:#243c59;border-radius:999px;overflow:hidden;flex:1}.bar{height:100%;background:linear-gradient(90deg,#6ee7b7,#ffd34e);width:0}.score{font-weight:900}
+.card{background:#16375f;border:1px solid #4e78a2;border-radius:24px;padding:22px;box-shadow:0 18px 40px rgba(0,0,0,.25)}.qnum{color:#b7c7db;font-weight:800}
+.imagebox{width:min(100%,560px);aspect-ratio:16/9;background:#fff;margin:16px auto;border-radius:18px;overflow:hidden;border:3px solid #7aa2cb}.imagebox svg{width:100%;height:100%;display:block}
+.question{font-size:22px;font-weight:800;line-height:1.5;margin:16px 0}.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.opt{background:#fff;color:#17304e;border:3px solid transparent;border-radius:16px;padding:16px;font-size:21px;font-weight:900}.correct{border-color:#65d69b!important;background:#edfff5!important}.wrong{border-color:#ff6e6e!important;background:#fff0f0!important}
+.feedback{margin-top:16px;background:#102b4a;border:1px solid #315e89;border-radius:14px;padding:14px;min-height:66px;font-size:18px;line-height:1.5}.next{width:100%;margin-top:14px;background:#3b80c9;color:#fff;border:0;border-radius:14px;padding:14px;font-size:19px;font-weight:900}
+.result{text-align:center}.big{font-size:62px;font-weight:900;color:#ffc857}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}.actions button{border:0;border-radius:14px;padding:13px 20px;font-size:17px;font-weight:900}.retry{background:#ffc857;color:#173153}.missed{background:#3b80c9;color:#fff}
+@media(max-width:650px){.options{grid-template-columns:1fr}.card{padding:17px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <section id="home" class="hero">
-<div class="pill">TAHUN 3 · BAHASA MELAYU</div>
-<h1>拼写大冒险!</h1>
-<p>看图，选正确的国语拼写！<br>一共 26 道题，挑战满分成为 Ejaan Champion 🏆</p>
-<button class="start" onclick="startGame()">🚀 开始挑战</button>
+<div class="badge">TAHUN 3 · WEEK 2</div>
+<h1>Kosa Kata Quiz</h1>
+<div class="sub">Tanggungjawab di Rumah<br>看图片，选择最适合的 Bahasa Melayu 词汇。</div>
+<button class="start" onclick="startGame()">开始挑战</button>
 </section>
 
 <section id="game" class="hidden">
-<div class="top"><div class="progress"><div id="bar" class="bar"></div></div><b id="score">0 / 0</b></div>
+<div class="top"><div class="progress"><div class="bar" id="bar"></div></div><div class="score" id="score">0 / 0</div></div>
 <div class="card">
-<div id="qnum"></div>
-<div id="emoji" class="emoji"></div>
-<div id="hint" class="hint"></div>
-<div class="prompt">哪一个是正确的国语拼写？</div>
-<div class="options"><button id="opt1" class="option"></button><button id="opt2" class="option"></button></div>
-<div id="feedback" class="feedback">请选择一个答案。</div>
-<button id="next" class="next hidden" onclick="nextQ()">下一题 →</button>
+<div class="qnum" id="qnum"></div>
+<div class="imagebox" id="pic"></div>
+<div class="question" id="question"></div>
+<div class="options" id="options"></div>
+<div class="feedback" id="feedback">请选择一个答案。</div>
+<button class="next hidden" id="next" onclick="nextQ()">下一题 →</button>
 </div>
 </section>
 
 <section id="result" class="hidden">
-<div class="card" style="text-align:center">
-<div style="font-size:70px">🏆</div>
-<h2>挑战完成!</h2>
-<div id="finalscore" style="font-size:56px;font-weight:900;color:#ffc852"></div>
-<p id="finalmsg"></p>
-<button class="retry" onclick="startGame()">重新挑战全部</button>
-<button class="next" id="retryMissed" onclick="startMissed()">只练错题</button>
+<div class="card result">
+<div style="font-size:68px">🏆</div>
+<h2>挑战完成</h2>
+<div class="big" id="finalscore"></div>
+<p id="finalmsg" style="font-size:19px"></p>
+<div class="actions"><button class="retry" onclick="startGame()">重新挑战全部</button><button class="missed" id="retryMissed" onclick="startMissed()">只练错题</button></div>
 </div>
 </section>
 </div>
 
 <script>
+function scene(type){
+ const wrap=(body)=>'<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg"><rect width="640" height="360" fill="#eef7ff"/><rect y="255" width="640" height="105" fill="#f5dfc5"/>'+body+'</svg>';
+ const kid='<circle cx="245" cy="115" r="42" fill="#ffd2ad"/><path d="M205 110q40-70 85-5" fill="#2d241f"/><rect x="210" y="155" width="72" height="92" rx="20" fill="#2f7dd1"/><line x1="230" y1="245" x2="215" y2="320" stroke="#233" stroke-width="18"/><line x1="260" y1="245" x2="285" y2="320" stroke="#233" stroke-width="18"/>';
+ if(type==="wash") return wrap(kid+'<rect x="350" y="190" width="180" height="70" rx="12" fill="#c6e7f7"/><ellipse cx="410" cy="185" rx="42" ry="12" fill="#fff" stroke="#7ea2bb" stroke-width="5"/><path d="M280 190 Q340 150 390 185" stroke="#ffd2ad" stroke-width="18" fill="none"/><path d="M430 150q25-25 50 0" stroke="#4da5d9" stroke-width="14" fill="none"/>');
+ if(type==="sweep") return wrap(kid+'<line x1="330" y1="135" x2="430" y2="295" stroke="#9a642d" stroke-width="12"/><polygon points="402,285 462,285 438,330 390,330" fill="#f2b84b"/><circle cx="490" cy="300" r="7" fill="#8c6544"/><circle cx="525" cy="310" r="7" fill="#8c6544"/>');
+ if(type==="sort") return wrap(kid+'<rect x="355" y="205" width="70" height="90" rx="8" fill="#2aa3df"/><rect x="440" y="205" width="70" height="90" rx="8" fill="#f1c84b"/><rect x="525" y="205" width="70" height="90" rx="8" fill="#50b96b"/><rect x="375" y="165" width="32" height="45" rx="5" fill="#8fd8f5"/><rect x="463" y="172" width="30" height="35" fill="#fff3d0"/><circle cx="556" cy="182" r="19" fill="#bbb"/>');
+ if(type==="carry") return wrap(kid+'<circle cx="420" cy="120" r="38" fill="#ffd2ad"/><path d="M385 110q35-55 72-5" fill="#4b2d21"/><rect x="392" y="158" width="65" height="90" rx="18" fill="#f07b93"/><rect x="300" y="195" width="115" height="85" rx="12" fill="#d9b36c"/><circle cx="325" cy="190" r="18" fill="#6fb85c"/><circle cx="365" cy="186" r="16" fill="#ef6d4d"/>');
+ if(type==="wipe") return wrap(kid+'<rect x="335" y="220" width="220" height="28" rx="4" fill="#b67f55"/><path d="M290 190 Q355 205 405 218" stroke="#ffd2ad" stroke-width="18" fill="none"/><rect x="390" y="205" width="55" height="25" rx="6" fill="#f7e35e"/>');
+ if(type==="team") return wrap(kid+'<circle cx="430" cy="120" r="38" fill="#ffd2ad"/><path d="M395 108q35-58 72-5" fill="#4b2d21"/><rect x="400" y="158" width="64" height="88" rx="18" fill="#f07b93"/><line x1="470" y1="175" x2="540" y2="295" stroke="#9a642d" stroke-width="10"/><polygon points="515,290 565,290 548,325 505,325" fill="#f2b84b"/>');
+ if(type==="water") return wrap(kid+'<path d="M330 185h90l20 55h-120z" fill="#58aee8"/><path d="M420 195q70 0 90 50" stroke="#58aee8" stroke-width="14" fill="none"/><circle cx="525" cy="255" r="10" fill="#66b7ef"/><path d="M540 290q30-80 70 0" fill="#65bb65"/><circle cx="565" cy="238" r="18" fill="#ee6d86"/>');
+ if(type==="trash") return wrap(kid+'<rect x="370" y="185" width="105" height="125" rx="10" fill="#49a95a"/><rect x="355" y="170" width="135" height="22" rx="8" fill="#318a45"/><path d="M292 180 Q350 165 390 190" stroke="#ffd2ad" stroke-width="18" fill="none"/><path d="M390 150l45 28-25 35-48-28z" fill="#333"/>');
+ if(type==="responsible") return wrap(kid+'<rect x="360" y="150" width="185" height="120" rx="14" fill="#fff" stroke="#7ca0c8" stroke-width="6"/><line x1="390" y1="185" x2="510" y2="185" stroke="#7ca0c8" stroke-width="8"/><line x1="390" y1="220" x2="510" y2="220" stroke="#7ca0c8" stroke-width="8"/><path d="M365 180l15 15 24-30" stroke="#4cae62" stroke-width="10" fill="none"/><path d="M365 215l15 15 24-30" stroke="#4cae62" stroke-width="10" fill="none"/>');
+ return wrap(kid+'<rect x="360" y="165" width="180" height="115" rx="16" fill="#fff" stroke="#7ca0c8" stroke-width="6"/><circle cx="410" cy="215" r="25" fill="#f5c84e"/><rect x="450" y="190" width="60" height="12" rx="6" fill="#7ca0c8"/><rect x="450" y="220" width="60" height="12" rx="6" fill="#7ca0c8"/>');
+}
 const ALL=[
-["aiskrim","ais- krim","🍦","冰淇淋"],["mi","mee","🍜","面"],["bas","bus","🚌","巴士"],["pelanggan","pelanggang","👥","顾客"],["beg","bag","🎒","书包"],["bekerja","berkerja","💼","工作"],["kahwin","khawin","💍","结婚"],["Inggeris","English","🇬🇧","英语 / 英国"],["joging","jogging","🏃","慢跑"],["kampung","kampong","🏡","乡村"],["galakan","galakkan","👏","鼓励（名词）"],["komputer","computer","🖥️","电脑"],["pertunjukan","pertunjukkan","🎭","表演 / 展示"],["menebang","menerbang","🪓","砍伐"],["motosikal","motorsikal","🏍️","摩托车"],["surat khabar","suratkhabar","📰","报纸"],["menggunakan","menggunakkan","✍️","使用"],["rujukan","rujukkan","📚","参考资料"],["nombor","number","🔢","号码"],["memasukkan","memasukan","📥","放入"],["ulang kaji","ulangkaji","📖","复习"],["demam","deman","🤒","发烧"],["bekerjasama","berkerjasama","🤝","合作"],["gelanggang","gelanggan","🏸","球场 / 场地"],["televisyen","television","📺","电视"],["pelancong","pelancung","🧳","游客"]
-].map(x=>({correct:x[0],wrong:x[1],emoji:x[2],hint:x[3]}));
+{pic:"wash",q:"Selepas makan malam, Kelvin ______ pinggan di dapur.",o:["mencuci","menyapu","menyiram","mengelap"],a:"mencuci",zh:"mencuci = 清洗；mencuci pinggan = 洗碗"},
+{pic:"sweep",q:"Siti menggunakan penyapu untuk ______ lantai ruang tamu.",o:["mengelap","menyapu","mencuci","menyiram"],a:"menyapu",zh:"menyapu = 扫；menyapu lantai = 扫地"},
+{pic:"sort",q:"Mei Ling memasukkan botol plastik, kertas dan tin ke dalam bekas yang berlainan. Dia sedang ______ bahan kitar semula.",o:["membuang","mengasingkan","menjaga","meringankan"],a:"mengasingkan",zh:"mengasingkan = 分类 / 分开"},
+{pic:"carry",q:"Kelvin membantu ibu membawa barang untuk ______ beban ibunya.",o:["menjaga","mengasingkan","meringankan","menyiram"],a:"meringankan",zh:"meringankan beban = 减轻负担"},
+{pic:"wipe",q:"Hakim menggunakan kain untuk ______ meja makan selepas makan.",o:["mengelap","menyapu","menyiram","membuang"],a:"mengelap",zh:"mengelap = 擦拭；mengelap meja = 擦桌子"},
+{pic:"team",q:"Ayah dan Kelvin ______ membersihkan rumah supaya kerja dapat disiapkan dengan lebih cepat.",o:["bekerjasama","membuang","menyiram","mengelap"],a:"bekerjasama",zh:"bekerjasama = 合作"},
+{pic:"water",q:"Ibu meminta Kelvin ______ pokok bunga di halaman rumah setiap petang.",o:["menyapu","mengelap","menyiram","mengasingkan"],a:"menyiram",zh:"menyiram = 浇水；menyiram pokok = 给植物浇水"},
+{pic:"trash",q:"Kelvin memasukkan sampah ke dalam tong sampah. Kata kerja yang sesuai ialah ______.",o:["membuang","mengelap","mencuci","menyusun"],a:"membuang",zh:"membuang sampah = 丢垃圾"},
+{pic:"responsible",q:"Kelvin selalu membantu ibu bapanya melakukan kerja rumah. Kelvin ialah seorang anak yang ______.",o:["bertanggungjawab","tergesa-gesa","cuai","malas"],a:"bertanggungjawab",zh:"bertanggungjawab = 负责任"},
+{pic:"task",q:"Apakah maksud perkataan 'tugas'?",o:["任务 / 职责","垃圾桶","花园","扫帚"],a:"任务 / 职责",zh:"tugas = 任务 / 职责"}
+];
 let qs=[],idx=0,correct=0,missed=[],locked=false;
+const $=id=>document.getElementById(id);
 function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function show(id){["home","game","result"].forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden")}
+function show(id){["home","game","result"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden")}
 function startGame(){qs=shuffle(ALL);idx=0;correct=0;missed=[];show("game");render()}
 function startMissed(){if(!missed.length)return;qs=shuffle(missed.map(x=>x.q));idx=0;correct=0;missed=[];show("game");render()}
-function render(){locked=false;const q=qs[idx];qnum.textContent="第 "+(idx+1)+" / "+qs.length+" 题";emoji.textContent=q.emoji;hint.textContent="提示："+q.hint;const o=shuffle([q.correct,q.wrong]);[opt1,opt2].forEach((b,i)=>{b.textContent=o[i];b.className="option";b.onclick=()=>choose(b.textContent,b)});feedback.textContent="请选择一个答案。";next.classList.add("hidden");score.textContent=correct+" / "+idx;bar.style.width=(idx/qs.length*100)+"%"}
-function choose(ans,btn){if(locked)return;locked=true;const q=qs[idx],ok=ans===q.correct;[opt1,opt2].forEach(b=>{if(b.textContent===q.correct)b.classList.add("correct");else if(b===btn&&!ok)b.classList.add("wrong")});if(ok){correct++;feedback.innerHTML="✅ 答对了！正确拼写是 <b>"+q.correct+"</b>。"}else{missed.push({q});feedback.innerHTML="❌ 再记一次：<b>"+q.correct+"</b> 才是正确拼写。"}score.textContent=correct+" / "+(idx+1);next.classList.remove("hidden")}
+function render(){locked=false;const q=qs[idx];$("qnum").textContent="第 "+(idx+1)+" / "+qs.length+" 题";$("pic").innerHTML=scene(q.pic);$("question").textContent=q.q;$("options").innerHTML="";shuffle(q.o).forEach(v=>{let b=document.createElement("button");b.className="opt";b.textContent=v;b.onclick=()=>choose(v,b);$("options").appendChild(b)});$("feedback").textContent="请选择一个答案。";$("next").classList.add("hidden");$("score").textContent=correct+" / "+idx;$("bar").style.width=(idx/qs.length*100)+"%"}
+function choose(v,btn){if(locked)return;locked=true;const q=qs[idx];document.querySelectorAll(".opt").forEach(b=>{if(b.textContent===q.a)b.classList.add("correct");else if(b===btn&&v!==q.a)b.classList.add("wrong")});if(v===q.a){correct++;$("feedback").innerHTML="✅ 答对了！<b>"+q.a+"</b><br>"+q.zh}else{missed.push({q});$("feedback").innerHTML="❌ 正确答案：<b>"+q.a+"</b><br>"+q.zh}$("score").textContent=correct+" / "+(idx+1);$("next").classList.remove("hidden")}
 function nextQ(){idx++;if(idx>=qs.length)return finish();render()}
-function finish(){show("result");finalscore.textContent=correct+" / "+qs.length;const p=Math.round(correct/qs.length*100);finalmsg.textContent=p===100?"满分！你是 Ejaan Champion 🏆":p>=80?"很好！再练习错题就更稳了。":p>=60?"不错，继续复习常写错的词。":"先复习正确拼写，再挑战一次。";retryMissed.style.display=missed.length?"inline-block":"none"}
+function finish(){show("result");$("finalscore").textContent=correct+" / "+qs.length;let p=Math.round(correct/qs.length*100);$("finalmsg").textContent=p===100?"满分！Week 2 词汇掌握得很好。":p>=80?"很好！再练错题就更稳。":p>=60?"不错，继续复习错题词汇。":"建议先复习图片与词义，再挑战一次。";$("retryMissed").style.display=missed.length?"inline-block":"none"}
 </script>
-</body>
-</html>
+</body></html>
